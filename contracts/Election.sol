@@ -29,12 +29,14 @@ contract Election is Owner {
         addCandidate("Jean Mark", "Ecology");
         addCandidate("Anne Sophie","Liberal");
     }
-
+    
+    //only the owner can add a candidate
     function addCandidate(string memory _name, string memory _party) public onlyOwner {
         candidatesCount++;
         candidates[candidatesCount] = Candidate(candidatesCount, _name, _party, 0);
     }
-
+    
+    //anyone that hasn't voted can vote
     function vote(uint _candidateId) public {
         require(!hasVoted[msg.sender]);
         require(_candidateId < candidatesCount && _candidateId > 0);
